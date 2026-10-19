@@ -1,0 +1,2484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saksham Gupta &mdash; Data Engineer &amp; Analyst</title>
+<meta name="description" content="Computer Science graduate from Manipal University. Four internships across cloud data engineering and business analytics, most recently at Accenture building serverless pipelines on AWS. Looking for an analyst role in infrastructure or public sector advisory.">
+<meta name="author" content="Saksham Gupta">
+<meta name="theme-color" content="#e9e8e3">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Saksham Gupta &mdash; Data Engineer &amp; Analyst">
+<meta property="og:description" content="Computer Science graduate from Manipal University. Four internships across cloud data engineering and business analytics, most recently at Accenture building serverless pipelines on AWS. Looking for an analyst role in infrastructure or public sector advisory.">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(./fonts/archivo.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./fonts/mono-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./fonts/mono-500.woff2) format("woff2");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Bauhaus primaries on a warm neutral ground */
+  --canvas: #e9e8e3;
+  --canvas-deep: #dedcd5;
+  --ink: #000000;
+  --paper: #f6f3ea; /* warm beige — lifts off the canvas without going stark white */
+  --blue: #2417f5;
+  --red: #f0341a;
+  --yellow: #ffc700;
+  --muted: #6e6e68;
+  --line: rgba(0, 0, 0, 0.16);
+  --line-soft: rgba(0, 0, 0, 0.08);
+
+  --display: "Archivo Variable", "Archivo", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Modular scale, perfect fourth, 17px base */
+  --t-xs: 0.705rem;
+  --t-sm: 0.815rem;
+  --t-base: 1.0625rem;
+  --t-md: 1.32rem;
+  --t-lg: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
+  --t-xl: clamp(2rem, 1.3rem + 3.2vw, 3.6rem);
+  --t-2xl: clamp(2.6rem, 1.2rem + 6vw, 6rem);
+  --t-mega: clamp(2.9rem, -0.2rem + 12.4vw, 10.4rem);
+
+  --gutter: clamp(1.1rem, 0.4rem + 3vw, 4.5rem);
+  --rule: 1px solid var(--line);
+  --bar: 76px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: var(--t-base);
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--blue);
+  color: var(--canvas);
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPE PRIMITIVES
+   ═══════════════════════════════════════════════════════════ */
+.display {
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  font-stretch: 112%;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.lede {
+  font-size: var(--t-lg);
+  line-height: 1.26;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  max-width: 22ch;
+}
+
+.prose {
+  max-width: 62ch;
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+.shell {
+  width: 100%;
+  padding-inline: var(--gutter);
+  margin-inline: auto;
+  max-width: 1680px;
+}
+
+.band {
+  padding-block: clamp(4rem, 2rem + 7vw, 9rem);
+  border-top: var(--rule);
+  position: relative;
+}
+
+.band-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(2.2rem, 1rem + 3vw, 4rem);
+}
+
+.band-title {
+  font-size: var(--t-xl);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-stretch: 112%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+   ═══════════════════════════════════════════════════════════ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: var(--blue);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid var(--ink);
+  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
+    background-color 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
+}
+
+.cursor-ring[data-active="true"] {
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  background: var(--blue);
+  border-color: var(--blue);
+  opacity: 0.16;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Set when the custom cursor is switched off (touch, low-power,
+   reduced motion) so the real cursor is never hidden with no
+   replacement drawn. */
+.no-cursor .cursor-dot,
+.no-cursor .cursor-ring {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRELOADER — the single orchestrated page-load moment
+   ═══════════════════════════════════════════════════════════ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--ink);
+  color: var(--canvas);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: var(--gutter);
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.loader[data-done="true"] {
+  transform: translateY(-101%);
+}
+
+.loader-mark {
+  align-self: center;
+  justify-self: start;
+  font-size: clamp(2rem, 1rem + 6vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  font-stretch: 112%;
+}
+
+.loader-mark span {
+  display: block;
+  overflow: hidden;
+}
+
+.loader-mark span b {
+  display: block;
+  font-weight: inherit;
+  transform: translateY(100%);
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.loader-mark span:nth-child(2) b {
+  animation-delay: 0.1s;
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.loader-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: rgba(233, 232, 227, 0.6);
+}
+
+.loader-count {
+  font-size: clamp(2rem, 1rem + 5vw, 4rem);
+  font-family: var(--mono);
+  color: var(--canvas);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.loader-bar {
+  height: 2px;
+  background: rgba(233, 232, 227, 0.22);
+  margin-top: 1.1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-bar i {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: var(--canvas);
+  transition: right 0.2s linear;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════════════════════ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  height: var(--bar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  /* Opaque on purpose: a blurred sticky bar forces a full-screen
+     GPU recomposite on every frame of every animation below it. */
+  background: var(--canvas);
+  border-bottom: var(--rule);
+  padding-inline: var(--gutter);
+}
+
+.nav-mark {
+  font-weight: 800;
+  font-size: var(--t-md);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  font-stretch: 112%;
+  white-space: nowrap;
+}
+
+.nav-mark i {
+  color: var(--blue);
+  font-style: normal;
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(1rem, 0.3rem + 1.8vw, 2.6rem);
+  align-items: center;
+}
+
+.nav-link {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  position: relative;
+  padding-block: 0.45rem;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1.5px;
+  width: 0;
+  background: var(--ink);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover,
+.nav-link[data-current="true"] {
+  color: var(--ink);
+}
+
+.nav-link:hover::after,
+.nav-link[data-current="true"]::after {
+  width: 100%;
+}
+
+.nav-link[data-current="true"]::after {
+  background: var(--blue);
+}
+
+.nav-cta {
+  border: 1.5px solid var(--ink);
+  padding: 0.5rem 1.05rem;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  background: var(--ink);
+  color: var(--canvas);
+  transition: background-color 0.22s ease, color 0.22s ease;
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--paper);
+}
+
+.nav-burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--ink);
+  position: relative;
+}
+
+.nav-burger i {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.nav-burger i:nth-child(1) {
+  top: 14px;
+}
+.nav-burger i:nth-child(2) {
+  bottom: 14px;
+}
+
+.nav-burger[aria-expanded="true"] i:nth-child(1) {
+  transform: translateY(5.5px) rotate(45deg);
+}
+.nav-burger[aria-expanded="true"] i:nth-child(2) {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+.nav-sheet {
+  position: fixed;
+  inset: 0 0 auto 0;
+  background: var(--ink);
+  color: var(--canvas);
+  z-index: 290;
+  padding: calc(var(--bar) + 1.4rem) var(--gutter) var(--gutter);
+  display: grid;
+  gap: 0.2rem;
+  transform: translateY(-100%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.nav-sheet[data-open="true"] {
+  transform: translateY(0);
+}
+
+.nav-sheet a {
+  font-size: var(--t-xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-stretch: 112%;
+}
+
+.nav-sheet a:hover {
+  color: var(--yellow);
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-burger {
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  padding-top: clamp(2.5rem, 1rem + 5vw, 6rem);
+  overflow: hidden;
+}
+
+/* content sits above the scattered shapes, never under them */
+.hero > .shell {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+
+.hero-say {
+  font-size: var(--t-md);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  font-stretch: 108%;
+}
+
+.hero-bio {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: var(--t-base);
+  line-height: 1.55;
+  margin-top: 0.85rem;
+  max-width: 40ch;
+}
+
+/* The loudest thing on the page after the name: two short lines,
+   each a complete sentence, set as a block. */
+.hero-statement {
+  margin-top: clamp(2.6rem, 1.4rem + 6vw, 7rem);
+  font-size: clamp(2.3rem, 1.1rem + 4vw, 4rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.038em;
+  font-stretch: 106%;
+}
+
+.hero-statement span {
+  display: block;
+}
+
+.hero-statement span:last-child {
+  color: var(--blue);
+}
+
+.hero-meta {
+  margin-top: 2.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  align-items: center;
+}
+
+.hero-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1.5px solid var(--ink);
+  padding: 0.8rem 1.5rem;
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.04em;
+  background: transparent;
+  transition: background-color 0.22s ease, color 0.22s ease,
+    border-color 0.22s ease;
+  will-change: transform;
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+.btn-fill {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--paper);
+}
+
+.btn-fill:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+
+/* wordmark that bleeds off the right edge */
+.hero-wordmark {
+  margin-top: clamp(2.5rem, 1rem + 5vw, 5rem);
+  font-size: var(--t-mega);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 0.82;
+  white-space: nowrap;
+  font-stretch: 118%;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-wordmark b {
+  display: inline-block;
+  font-weight: inherit;
+  transform: translateY(0.14em);
+  opacity: 0;
+  animation: wordUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes wordUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.hero-wordmark b:last-child {
+  color: var(--blue);
+}
+
+/* floating Bauhaus confetti */
+.confetti {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.confetti-dot {
+  border-radius: 50%;
+}
+
+.confetti-sq {
+  border-radius: 0;
+}
+
+/* No room for decoration once the columns stack */
+@media (max-width: 1000px) {
+  .confetti {
+    display: none;
+  }
+}
+
+/* Let the name wrap on phones rather than slicing a letter in half */
+@media (max-width: 700px) {
+  .hero-wordmark {
+    white-space: normal;
+    line-height: 0.86;
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-statement {
+    margin-top: 2.4rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PIPELINE — the hero's one bold idea
+   ═══════════════════════════════════════════════════════════ */
+.pipe {
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  position: relative;
+  z-index: 2;
+  min-width: 0; /* let the diagram scroll inside instead of widening the page */
+}
+
+.pipe-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1.5px solid var(--ink);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+}
+
+.pipe-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+
+.pipe-live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: blip 1.6s ease-in-out infinite;
+}
+
+@keyframes blip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.pipe-stage {
+  position: relative;
+  padding: 1.4rem 1rem 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.pipe-svg {
+  width: 100%;
+  min-width: 430px;
+  height: auto;
+  overflow: visible;
+}
+
+.pipe-node rect {
+  transition: fill 0.2s ease;
+}
+
+.pipe-node {
+  cursor: pointer;
+}
+
+.pipe-node text {
+  font-family: var(--mono);
+  font-size: 8.4px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  fill: var(--ink);
+}
+
+.pipe-node .pipe-sub {
+  font-size: 6.8px;
+  font-weight: 400;
+  fill: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.pipe-readout {
+  border-top: 1.5px solid var(--ink);
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.3rem;
+  min-height: 92px;
+}
+
+.pipe-readout h4 {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: var(--blue);
+}
+
+.pipe-readout p {
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  max-width: 54ch;
+  color: var(--ink);
+}
+
+.pipe-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1.5px solid var(--ink);
+}
+
+.pipe-stat {
+  padding: 0.75rem 1rem;
+  border-right: 1px solid var(--line);
+}
+
+.pipe-stat:last-child {
+  border-right: none;
+}
+
+.pipe-stat b {
+  display: block;
+  font-family: var(--mono);
+  font-size: var(--t-md);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pipe-stat span {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.pipe-stat[data-flag="true"] b {
+  color: var(--red);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════════════════════════ */
+.marquee {
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: var(--canvas);
+  overflow: hidden;
+  padding-block: 0.85rem;
+  display: flex;
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  flex: none;
+  gap: 2.4rem;
+  padding-right: 2.4rem;
+  animation: slide 34s linear infinite;
+  align-items: center;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-item {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.marquee-item::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--yellow);
+  flex: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WORK
+   ═══════════════════════════════════════════════════════════ */
+.work-list {
+  border-top: 1.5px solid var(--ink);
+}
+
+.work-row {
+  border-bottom: 1.5px solid var(--ink);
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 0.5rem + 2vw, 3rem);
+  padding-block: clamp(1.6rem, 1rem + 2vw, 2.8rem);
+  align-items: start;
+  position: relative;
+  transition: background-color 0.3s ease, padding-inline 0.3s ease;
+}
+
+.work-row:hover {
+  background: var(--paper);
+  padding-inline: 1.2rem;
+}
+
+.work-index {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  padding-top: 0.45rem;
+}
+
+.work-title {
+  font-size: var(--t-lg);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
+  max-width: 16ch;
+}
+
+.work-kicker {
+  display: block;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.09em;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+  text-transform: none;
+}
+
+.work-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: #2a2a26;
+  max-width: 50ch;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.work-tag {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--line);
+  padding: 0.26rem 0.55rem;
+  color: var(--muted);
+}
+
+.work-mark {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(10px, -50%) scale(0.6);
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.work-row:hover .work-mark {
+  opacity: 1;
+  transform: translate(-1.2rem, -50%) scale(1);
+}
+
+.work-row[data-accent="blue"] .work-mark {
+  background: var(--blue);
+}
+.work-row[data-accent="red"] .work-mark {
+  background: var(--red);
+  border-radius: 50%;
+}
+.work-row[data-accent="yellow"] .work-mark {
+  background: var(--yellow);
+}
+
+@media (max-width: 860px) {
+  .work-row {
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+  }
+  .work-body {
+    grid-column: 2;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EXPERIENCE
+   ═══════════════════════════════════════════════════════════ */
+.xp {
+  border-top: 1.5px solid var(--ink);
+}
+
+.xp-item {
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.xp-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding-block: clamp(1.3rem, 0.9rem + 1.4vw, 2rem);
+  text-align: left;
+  transition: padding-inline 0.3s ease, background-color 0.3s ease;
+}
+
+.xp-head:hover {
+  padding-inline: 1.2rem;
+  background: var(--paper);
+}
+
+.xp-item[data-open="true"] .xp-head {
+  padding-inline: 1.2rem;
+  background: var(--paper);
+}
+
+.xp-co {
+  font-size: var(--t-xl);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-transform: uppercase;
+  font-stretch: 112%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.xp-role {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 400;
+  text-transform: none;
+  font-stretch: 100%;
+}
+
+.xp-when {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.xp-plus {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  position: relative;
+}
+
+.xp-plus::before,
+.xp-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+  left: 50%;
+  top: 50%;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.xp-plus::before {
+  width: 15px;
+  height: 1.5px;
+  transform: translate(-50%, -50%);
+}
+
+.xp-plus::after {
+  width: 1.5px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+}
+
+.xp-item[data-open="true"] .xp-plus::after,
+.faq-item[data-open="true"] .xp-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.xp-item[data-open="true"] .xp-plus::before,
+.faq-item[data-open="true"] .xp-plus::before {
+  background: var(--blue);
+}
+
+.faq-q .xp-plus {
+  flex: none;
+}
+
+.xp-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--paper);
+}
+
+.xp-item[data-open="true"] .xp-panel {
+  grid-template-rows: 1fr;
+}
+
+.xp-panel > div {
+  overflow: hidden;
+}
+
+.xp-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.3fr);
+  gap: clamp(1.4rem, 0.8rem + 2.5vw, 3.5rem);
+  padding: 0 1.2rem clamp(1.8rem, 1rem + 2vw, 2.8rem);
+}
+
+.xp-blurb {
+  font-size: var(--t-md);
+  line-height: 1.34;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  max-width: 28ch;
+}
+
+.xp-points {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.xp-points li {
+  font-size: var(--t-sm);
+  line-height: 1.58;
+  color: #2a2a26;
+  padding-left: 1.4rem;
+  position: relative;
+  max-width: 58ch;
+}
+
+.xp-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 1.5px;
+  background: var(--blue);
+}
+
+.xp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.3rem;
+}
+
+@media (max-width: 860px) {
+  .xp-inner {
+    grid-template-columns: 1fr;
+  }
+  .xp-when span {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   IMPACT
+   ═══════════════════════════════════════════════════════════ */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  border-top: 1.5px solid var(--ink);
+  border-left: 1.5px solid var(--ink);
+}
+
+.impact-cell {
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  padding: clamp(1.4rem, 1rem + 1.5vw, 2.2rem) clamp(1rem, 0.6rem + 1vw, 1.6rem);
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  transition: background-color 0.3s ease;
+}
+
+.impact-cell:hover {
+  background: var(--blue);
+  color: var(--paper);
+}
+
+.impact-num {
+  font-size: var(--t-2xl);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.86;
+  font-variant-numeric: tabular-nums;
+  font-stretch: 112%;
+}
+
+.impact-label {
+  font-size: var(--t-sm);
+  line-height: 1.38;
+  max-width: 22ch;
+}
+
+.impact-where {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.impact-cell:hover .impact-where {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SKILLS / ABOUT
+   ═══════════════════════════════════════════════════════════ */
+/* Long-form section: the essay runs at a comfortable measure, the
+   skills sit underneath it rather than alongside. */
+.about-copy {
+  max-width: 64ch;
+}
+
+.about-copy p {
+  font-size: var(--t-base);
+  line-height: 1.62;
+  color: #2a2a26;
+}
+
+.about-copy p + p {
+  margin-top: 1.15rem;
+}
+
+/* Opening line carries the claim, so it gets display treatment. */
+.about-copy p:first-child {
+  font-size: var(--t-lg);
+  line-height: 1.26;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  color: var(--ink);
+  max-width: 28ch;
+  margin-bottom: 1.9rem;
+}
+
+/* Closing statement of intent. */
+.about-copy p:last-child {
+  margin-top: 1.6rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.about-skills {
+  margin-top: clamp(2.8rem, 1.6rem + 3.5vw, 5rem);
+}
+
+.skill-group {
+  border-top: 1px solid var(--line);
+  padding-block: 1.3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 2fr);
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.skill-group:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.skill-name {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 0.3rem;
+}
+
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--ink);
+  padding: 0.33rem 0.65rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.chip:hover {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+.credit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: clamp(2.4rem, 1.5rem + 3vw, 4rem);
+}
+
+.credit-cell {
+  background: var(--canvas);
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.credit-cell b {
+  font-size: var(--t-md);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.credit-cell span {
+  font-size: var(--t-sm);
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .skill-group {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ
+   ═══════════════════════════════════════════════════════════ */
+.faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+
+.faq-side h2 {
+  font-size: var(--t-2xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 0.86;
+  font-stretch: 115%;
+}
+
+.faq-recap {
+  margin-top: 2rem;
+  max-width: 34ch;
+}
+
+.faq-recap p {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: #2a2a26;
+}
+
+.faq-item {
+  border-top: 1px solid var(--line);
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  text-align: left;
+  padding-block: 1.25rem;
+  font-size: var(--t-md);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.faq-q:hover {
+  color: var(--blue);
+}
+
+.faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item[data-open="true"] .faq-a {
+  grid-template-rows: 1fr;
+}
+
+.faq-a > div {
+  overflow: hidden;
+}
+
+.faq-a p {
+  font-size: var(--t-sm);
+  line-height: 1.62;
+  color: #2a2a26;
+  max-width: 58ch;
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.foot {
+  background: var(--ink);
+  color: var(--canvas);
+  padding-top: clamp(3.5rem, 2rem + 5vw, 6rem);
+  overflow: hidden;
+  position: relative;
+}
+
+.foot-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+  padding-bottom: clamp(3rem, 2rem + 4vw, 5rem);
+  border-bottom: 1px solid rgba(233, 232, 227, 0.2);
+}
+
+.foot-ask {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: rgba(233, 232, 227, 0.55);
+  margin-bottom: 1.2rem;
+}
+
+.foot-mail {
+  font-size: var(--t-xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  display: inline-block;
+  position: relative;
+  word-break: break-word;
+}
+
+/* Displayed address, not a link — so no underline or hover state
+   that would suggest it does something when clicked. */
+
+.foot-col h5 {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: rgba(233, 232, 227, 0.45);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(233, 232, 227, 0.2);
+}
+
+.foot-col ul {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.foot-col a {
+  font-size: var(--t-sm);
+  color: rgba(233, 232, 227, 0.8);
+  transition: color 0.2s ease, padding-left 0.25s ease;
+  display: inline-block;
+}
+
+.foot-col a:hover {
+  color: var(--yellow);
+  padding-left: 0.4rem;
+}
+
+/* Shown as readable text rather than a dial link, so it sits in the
+   list like the others but nothing happens on click. */
+.foot-plain {
+  font-size: var(--t-sm);
+  color: rgba(233, 232, 227, 0.8);
+  display: inline-block;
+  user-select: text;
+}
+
+.foot-sign {
+  padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) 0;
+}
+
+.foot-huge {
+  font-size: clamp(2.7rem, -0.2rem + 11.6vw, 9.6rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.84;
+  font-stretch: 118%;
+  display: block;
+}
+
+.foot-huge span {
+  display: block;
+  white-space: nowrap;
+}
+
+.foot-huge i {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.foot-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-block: 1.6rem;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  color: rgba(233, 232, 227, 0.45);
+}
+
+.to-top {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  color: rgba(233, 232, 227, 0.8);
+  border: 1px solid rgba(233, 232, 227, 0.3);
+  padding: 0.5rem 0.95rem;
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+
+.to-top:hover {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .foot-top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .foot-contact {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL — used only on the two big moments
+   ═══════════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .hero-wordmark b,
+  .loader-mark span b {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Pipeline node fills (driven by data-on, not inline attrs) ── */
+.pipe-node > rect:first-of-type {
+  fill: var(--paper);
+}
+
+.pipe-node[data-on="true"] > rect:first-of-type {
+  fill: var(--blue);
+}
+
+.pipe-gate {
+  fill: var(--red);
+}
+
+.pipe-node[data-on="true"] .pipe-gate {
+  fill: var(--yellow);
+}
+
+.pipe-node[data-on="true"] text {
+  fill: #fff;
+}
+
+.pipe-node[data-on="true"] .pipe-sub {
+  fill: rgba(255, 255, 255, 0.75);
+}
+
+</style>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader-mark"><span><b>Saksham</b></span><span><b>Gupta</b></span></div>
+  <div>
+    <div class="loader-bar"><i style="right:100%"></i></div>
+    <div class="loader-foot">
+      <span>INGESTING &mdash; RAW ZONE &rarr; CURATED</span>
+      <span class="loader-count">000</span>
+    </div>
+  </div>
+</div>
+
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<header class="nav">
+  <a href="#top" class="nav-mark">Saksham Gupta<i>.</i></a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#work" class="nav-link" data-current="false">WORK</a>
+    <a href="#experience" class="nav-link" data-current="false">EXPERIENCE</a>
+    <a href="#about" class="nav-link" data-current="false">ABOUT</a>
+    <a href="#faq" class="nav-link" data-current="false">FAQ</a>
+  </nav>
+  <button class="nav-burger" aria-expanded="false" aria-label="Open menu"><i></i><i></i></button>
+</header>
+
+<div class="nav-sheet" data-open="false">
+  <a href="#work">WORK</a>
+  <a href="#experience">EXPERIENCE</a>
+  <a href="#about">ABOUT</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<main>
+  <section class="hero" id="top">
+    <span class="confetti confetti-dot" data-depth="1.5" style="top:8%;left:46%;width:11px;height:11px;background:var(--blue)" aria-hidden="true"></span><span class="confetti confetti-dot" data-depth="2.4" style="top:22%;right:1%;width:9px;height:9px;background:var(--red)" aria-hidden="true"></span><span class="confetti confetti-sq" data-depth="1.1" style="top:40%;left:46%;width:13px;height:13px;background:var(--yellow)" aria-hidden="true"></span><span class="confetti confetti-dot" data-depth="2.9" style="top:55%;left:47.5%;width:8px;height:8px;background:var(--blue)" aria-hidden="true"></span><span class="confetti confetti-sq" data-depth="0.8" style="top:72%;left:45%;width:15px;height:15px;background:var(--ink)" aria-hidden="true"></span>
+    <div class="shell">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-say">Hi there, I&rsquo;m Saksham Gupta.</h1>
+          <p class="hero-bio">Computer Science graduate from Manipal University. Four internships across cloud data engineering and business analytics, most recently at Accenture building serverless pipelines on AWS. Looking for an analyst role in infrastructure or public sector advisory.</p>
+          <p class="hero-bio">I like the unglamorous part of data work: reconciling sources, catching the duplicates, making sure the number on the dashboard is the right number.</p>
+
+          <p class="hero-statement"><span>Data you can act on.</span><span>Not just look at.</span></p>
+
+          <div class="hero-meta">
+            <span class="tag">BASED IN GURUGRAM, INDIA</span>
+            <span class="tag">B.TECH CSE &mdash; MANIPAL UNIVERSITY</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-fill" href="#work" data-magnetic="0.32">See the work</a>
+            <a class="btn" href="./Saksham-Gupta-Resume.pdf" download="Saksham-Gupta-Resume.pdf" data-magnetic="0.32">Download r&eacute;sum&eacute;</a>
+          </div>
+        </div>
+
+        <div class="pipe">
+          <div class="pipe-top">
+            <span>SERVERLESS INGESTION &mdash; AWS</span>
+            <span class="pipe-live"><i></i>RUNNING</span>
+          </div>
+          <div class="pipe-stage"><svg class="pipe-svg" viewBox="0 0 340 172" role="img" aria-label="Diagram of a serverless data pipeline: source files land in an S3 raw bucket, stream through Kinesis, are transformed by Lambda, validated by Glue crawlers and reconciliation SQL, then written to a curated S3 bucket and reported in Power BI.">
+  <path id="pipe-route" d="M6,43 H334 V78 H10 V131 H272" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="3 3" opacity=".3"/>
+  <g id="pipe-records"></g>
+  <g class="pipe-node" data-on="false" data-label="SOURCE FILES" data-detail="Fragmented client exports arriving on no fixed schema and no fixed schedule." tabindex="0" role="button" aria-label="SOURCE FILES: Fragmented client exports arriving on no fixed schema and no fixed schedule.">
+  <rect x="6" y="24" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="41" y="44" text-anchor="middle">SOURCE FILES</text>
+  <text class="pipe-sub" x="41" y="53" text-anchor="middle">CSV / JSON</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="S3 LANDING" data-detail="Files land untouched in a raw bucket, so anything can be reprocessed from the original." tabindex="0" role="button" aria-label="S3 LANDING: Files land untouched in a raw bucket, so anything can be reprocessed from the original.">
+  <rect x="90" y="24" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="125" y="44" text-anchor="middle">S3 LANDING</text>
+  <text class="pipe-sub" x="125" y="53" text-anchor="middle">raw zone</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="KINESIS" data-detail="Records stream through in near real time rather than nightly batches." tabindex="0" role="button" aria-label="KINESIS: Records stream through in near real time rather than nightly batches.">
+  <rect x="174" y="24" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="209" y="44" text-anchor="middle">KINESIS</text>
+  <text class="pipe-sub" x="209" y="53" text-anchor="middle">stream</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="LAMBDA" data-detail="Event-triggered Python functions clean and reshape each record as it arrives." tabindex="0" role="button" aria-label="LAMBDA: Event-triggered Python functions clean and reshape each record as it arrives.">
+  <rect x="258" y="24" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="293" y="44" text-anchor="middle">LAMBDA</text>
+  <text class="pipe-sub" x="293" y="53" text-anchor="middle">python</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="GLUE + SQL" data-detail="Crawlers keep schemas current and reconciliation SQL catches drift and duplicates — before they reach a report." tabindex="0" role="button" aria-label="GLUE + SQL: Crawlers keep schemas current and reconciliation SQL catches drift and duplicates — before they reach a report.">
+  <rect x="34" y="112" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  <rect class="pipe-gate" x="34" y="112" width="70" height="3"/>
+  <text x="69" y="132" text-anchor="middle">GLUE + SQL</text>
+  <text class="pipe-sub" x="69" y="141" text-anchor="middle">validation</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="S3 CURATED" data-detail="Clean, conformed output written to a separate bucket for reporting." tabindex="0" role="button" aria-label="S3 CURATED: Clean, conformed output written to a separate bucket for reporting.">
+  <rect x="118" y="112" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="153" y="132" text-anchor="middle">S3 CURATED</text>
+  <text class="pipe-sub" x="153" y="141" text-anchor="middle">reporting zone</text>
+</g>
+<g class="pipe-node" data-on="false" data-label="POWER BI" data-detail="Where a manager looks once and knows what to do next." tabindex="0" role="button" aria-label="POWER BI: Where a manager looks once and knows what to do next.">
+  <rect x="202" y="112" width="70" height="38" stroke="#000" stroke-width="1.2"/>
+  
+  <text x="237" y="132" text-anchor="middle">POWER BI</text>
+  <text class="pipe-sub" x="237" y="141" text-anchor="middle">decisions</text>
+</g>
+</svg></div>
+          <div class="pipe-readout">
+            <h4>HOVER A STEP</h4>
+            <p>The pipeline I built at Accenture, running live. Blue records make it through; red ones are caught at the validation gate before they can reach a report.</p>
+          </div>
+          <div class="pipe-stats">
+            <div class="pipe-stat"><b data-stat="clean">0</b><span>RECORDS CURATED</span></div>
+            <div class="pipe-stat" data-flag="true"><b data-stat="flagged">0</b><span>CAUGHT AT GATE</span></div>
+            <div class="pipe-stat"><b data-stat="rate">&mdash;</b><span>REACHED REPORTING</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-wordmark" aria-hidden="true">
+        <b style="animation-delay:.1s">Saksham</b> <b style="animation-delay:.22s">Gupta.</b>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee"><div class="marquee-track"><span class="marquee-item">SQL</span><span class="marquee-item">PYTHON</span><span class="marquee-item">AWS</span><span class="marquee-item">POWER BI</span><span class="marquee-item">ETL DESIGN</span><span class="marquee-item">FORECASTING</span><span class="marquee-item">TABLEAU</span><span class="marquee-item">KINESIS</span><span class="marquee-item">LAMBDA</span><span class="marquee-item">GLUE</span><span class="marquee-item">AZURE</span><span class="marquee-item">SCENARIO ANALYSIS</span></div><div class="marquee-track" aria-hidden="true"><span class="marquee-item">SQL</span><span class="marquee-item">PYTHON</span><span class="marquee-item">AWS</span><span class="marquee-item">POWER BI</span><span class="marquee-item">ETL DESIGN</span><span class="marquee-item">FORECASTING</span><span class="marquee-item">TABLEAU</span><span class="marquee-item">KINESIS</span><span class="marquee-item">LAMBDA</span><span class="marquee-item">GLUE</span><span class="marquee-item">AZURE</span><span class="marquee-item">SCENARIO ANALYSIS</span></div></div>
+
+  <section class="band" id="work">
+    <div class="shell">
+      <div class="band-head">
+        <h2 class="band-title">Selected work</h2>
+        <span class="tag">THREE PROJECTS / TWO PUBLISHED PAPERS</span>
+      </div>
+      <div class="work-list">
+<article class="work-row" data-accent="blue">
+  <span class="work-index">01</span>
+  <h3 class="work-title"><span class="work-kicker">End-to-end pipeline + dashboard</span>Sales Performance &amp; Demand Forecasting</h3>
+  <div>
+    <p class="work-body">An end-to-end SQL and Python pipeline feeding Power BI dashboards that let planners test demand scenarios instead of arguing about them. Forecasts run on ARIMA and linear regression; the dashboard layer turns each scenario into a stocking decision.</p>
+    <div class="work-tags"><span class="work-tag">Python</span><span class="work-tag">SQL</span><span class="work-tag">ARIMA</span><span class="work-tag">Power BI</span></div>
+  </div>
+  <span class="work-mark" aria-hidden="true"></span>
+</article>
+<article class="work-row" data-accent="red">
+  <span class="work-index">02</span>
+  <h3 class="work-title"><span class="work-kicker">Architecture &amp; migration strategy</span>Serverless Data Pipelining on AWS</h3>
+  <div>
+    <p class="work-body">A scalable data architecture and migration strategy for legacy ETL workflows — moving scheduled batch jobs onto event-driven serverless components, with the reprocessing and failure paths designed in rather than bolted on.</p>
+    <div class="work-tags"><span class="work-tag">AWS</span><span class="work-tag">Lambda</span><span class="work-tag">Kinesis</span><span class="work-tag">Glue</span></div>
+  </div>
+  <span class="work-mark" aria-hidden="true"></span>
+</article>
+<article class="work-row" data-accent="yellow">
+  <span class="work-index">03</span>
+  <h3 class="work-title"><span class="work-kicker">SQL tracking &amp; reporting</span>Inventory Management System</h3>
+  <div>
+    <p class="work-body">A SQL-based tracking system with advanced querying for reporting, covering reorder points, safety stock and economic order quantity so that stock decisions follow from the data rather than from habit.</p>
+    <div class="work-tags"><span class="work-tag">SQL</span><span class="work-tag">EOQ</span><span class="work-tag">Safety stock</span></div>
+  </div>
+  <span class="work-mark" aria-hidden="true"></span>
+</article>
+<article class="work-row" data-accent="blue">
+  <span class="work-index">PAPER</span>
+  <h3 class="work-title"><span class="work-kicker">Published research</span>Heart Disease Detection</h3>
+  <div>
+    <p class="work-body">Published research applying machine learning to clinical risk prediction.</p>
+    
+  </div>
+  <span class="work-mark" aria-hidden="true"></span>
+</article>
+<article class="work-row" data-accent="blue">
+  <span class="work-index">PAPER</span>
+  <h3 class="work-title"><span class="work-kicker">Published research</span>Blockchain-based Law Enforcement</h3>
+  <div>
+    <p class="work-body">Published research on distributed ledgers for evidence and record integrity.</p>
+    
+  </div>
+  <span class="work-mark" aria-hidden="true"></span>
+</article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="experience">
+    <div class="shell">
+      <div class="band-head">
+        <h2 class="band-title">Where I&rsquo;ve worked</h2>
+        <span class="tag">FOUR INTERNSHIPS / 2024 &mdash; 2026</span>
+      </div>
+      <div class="xp" data-accordion>
+<div class="xp-item" data-acc-item data-open="true">
+  <h3><button class="xp-head" data-acc-trigger aria-expanded="true" aria-controls="xp-0">
+    <span class="xp-co">Accenture<span class="xp-role">Data Engineering Intern</span></span>
+    <span class="xp-when"><span>Jan 2026 &mdash; Jul 2026 &middot; Mumbai</span><i class="xp-plus" aria-hidden="true"></i></span>
+  </button></h3>
+  <div class="xp-panel" id="xp-0"><div><div class="xp-inner">
+    <div>
+      <p class="xp-blurb">Built a production serverless pipeline on AWS and made sure bad data never reached the reports built on top of it.</p>
+      <div class="xp-stack"><span class="chip">AWS S3</span><span class="chip">Kinesis</span><span class="chip">Lambda</span><span class="chip">Glue</span><span class="chip">Python</span><span class="chip">SQL</span></div>
+    </div>
+    <ul class="xp-points"><li>Built a serverless data pipeline on AWS — files ingested into an S3 landing bucket, records streamed through Kinesis, then transformed by event-triggered Python Lambda functions before curated output was written to a separate S3 bucket for reporting.</li><li>Wrote SQL to reconcile source and curated layers, and configured Glue crawlers to keep schemas current as source formats changed — catching schema drift and duplicates before they reached reports.</li><li>Documented pipeline architecture, failure handling and reprocessing steps, and led handover walkthroughs with the client team.</li></ul>
+  </div></div></div>
+</div>
+<div class="xp-item" data-acc-item data-open="false">
+  <h3><button class="xp-head" data-acc-trigger aria-expanded="false" aria-controls="xp-1">
+    <span class="xp-co">Zeproc<span class="xp-role">Technical Marketing Intern</span></span>
+    <span class="xp-when"><span>Jun 2025 &mdash; Aug 2025 &middot; Gurgaon</span><i class="xp-plus" aria-hidden="true"></i></span>
+  </button></h3>
+  <div class="xp-panel" id="xp-1"><div><div class="xp-inner">
+    <div>
+      <p class="xp-blurb">Audited a product catalogue for search visibility, then shipped the fixes that moved click-through.</p>
+      <div class="xp-stack"><span class="chip">Google Analytics</span><span class="chip">Schema markup</span><span class="chip">SEO audit</span></div>
+    </div>
+    <ul class="xp-points"><li>Audited 50+ product pages to identify indexing and crawlability gaps, translating findings into a prioritised remediation roadmap for product and content teams.</li><li>Implemented structured schema markup and keyword architecture against that roadmap, driving a 30% increase in click-through rate.</li></ul>
+  </div></div></div>
+</div>
+<div class="xp-item" data-acc-item data-open="false">
+  <h3><button class="xp-head" data-acc-trigger aria-expanded="false" aria-controls="xp-2">
+    <span class="xp-co">ATI Travel<span class="xp-role">IT Analyst Intern</span></span>
+    <span class="xp-when"><span>Dec 2024 &mdash; Jan 2025 &middot; Gurgaon</span><i class="xp-plus" aria-hidden="true"></i></span>
+  </button></h3>
+  <div class="xp-panel" id="xp-2"><div><div class="xp-inner">
+    <div>
+      <p class="xp-blurb">Read booking data for demand patterns, and cut the time it took to answer the next question.</p>
+      <div class="xp-stack"><span class="chip">SQL</span><span class="chip">Excel</span><span class="chip">Reporting</span></div>
+    </div>
+    <ul class="xp-points"><li>Analysed booking and customer data in SQL to identify demand and market trends, supporting a 15% increase in product visibility.</li><li>Streamlined data extraction and reporting processes, improving analytics turnaround and reliability by 20%.</li></ul>
+  </div></div></div>
+</div>
+<div class="xp-item" data-acc-item data-open="false">
+  <h3><button class="xp-head" data-acc-trigger aria-expanded="false" aria-controls="xp-3">
+    <span class="xp-co">Traverse India<span class="xp-role">Data &amp; IT Intern</span></span>
+    <span class="xp-when"><span>May 2024 &mdash; Jul 2024 &middot; Mumbai</span><i class="xp-plus" aria-hidden="true"></i></span>
+  </button></h3>
+  <div class="xp-panel" id="xp-3"><div><div class="xp-inner">
+    <div>
+      <p class="xp-blurb">First exposure to operational data at scale — and to the fact that a dashboard is only useful if someone acts on it.</p>
+      <div class="xp-stack"><span class="chip">Power BI</span><span class="chip">SQL</span><span class="chip">Excel</span></div>
+    </div>
+    <ul class="xp-points"><li>Analysed operational data to uncover trends and inform business recommendations, contributing to a 40% increase in operational efficiency.</li><li>Built interactive Power BI dashboards giving management a single view for decision-making.</li></ul>
+  </div></div></div>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="shell">
+      <div class="band-head">
+        <h2 class="band-title">What changed</h2>
+        <span class="tag">MEASURED OUTCOMES, NOT ESTIMATES</span>
+      </div>
+      <div class="impact-grid">
+<div class="impact-cell">
+  <span class="impact-num" data-count="40" data-suffix="%">0%</span>
+  <p class="impact-label">gain in operational efficiency</p>
+  <span class="impact-where">Traverse India</span>
+</div>
+<div class="impact-cell">
+  <span class="impact-num" data-count="30" data-suffix="%">0%</span>
+  <p class="impact-label">lift in click-through rate</p>
+  <span class="impact-where">Zeproc</span>
+</div>
+<div class="impact-cell">
+  <span class="impact-num" data-count="20" data-suffix="%">0%</span>
+  <p class="impact-label">faster, more reliable analytics turnaround</p>
+  <span class="impact-where">ATI Travel</span>
+</div>
+<div class="impact-cell">
+  <span class="impact-num" data-count="15" data-suffix="%">0%</span>
+  <p class="impact-label">increase in product visibility</p>
+  <span class="impact-where">ATI Travel</span>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="about">
+    <div class="shell">
+      <div class="band-head">
+        <h2 class="band-title">What I work with</h2>
+      </div>
+
+      <div class="about-copy">
+        <p>Most of the data problems I’ve worked on didn’t start as data problems. They started with someone not trusting a number.</p>
+        <p>At Accenture I spent six months building a serverless pipeline on AWS — files landing in an S3 bucket, records streaming through Kinesis, Python functions reshaping them on the way to a curated layer. The part I’d defend in an interview isn’t the architecture. It’s the reconciliation SQL underneath it, and the Glue crawlers that kept schemas current when the client’s source formats drifted. Catching duplicates and schema changes before they reach a report is the difference between a dashboard people act on and one they quietly stop opening.</p>
+        <p>That thread runs through the rest of it. At ATI Travel I read booking data for demand patterns, then cut the time it took to answer the next question. At Traverse India I built Power BI dashboards and learned fast that a dashboard nobody opens is worse than no dashboard at all. At Zeproc I audited fifty product pages for indexing gaps and shipped the fixes — a thirty percent lift in click-through, and a reminder that analysis is worth nothing until something changes because of it.</p>
+        <p>I’m comfortable at both ends of this. I can write the Lambda function in the morning and sit with a non-technical client team in the afternoon to explain, without jargon, what it does and what I’d do about what it found. Most of my internships needed exactly that, on the same day.</p>
+        <p>I graduated from Manipal University in May 2026 with a B.Tech in Computer Science. Along the way: two published papers, second place at Smart India Hackathon 2024, and logistics for a thousand-person college event — which taught me more about planning under real constraints than any coursework did.</p>
+        <p>I’m looking for an analyst role in infrastructure or public sector advisory.</p>
+      </div>
+
+      <div class="about-skills">
+<div class="skill-group">
+  <span class="skill-name">Analysis &amp; advisory</span>
+  <div class="skill-items"><span class="chip">Data analysis</span><span class="chip">Scenario &amp; sensitivity analysis</span><span class="chip">Forecasting</span><span class="chip">Requirements gathering</span><span class="chip">Stakeholder reporting</span><span class="chip">Report &amp; presentation writing</span></div>
+</div>
+<div class="skill-group">
+  <span class="skill-name">Data &amp; reporting</span>
+  <div class="skill-items"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Advanced Excel</span><span class="chip">Google Analytics</span></div>
+</div>
+<div class="skill-group">
+  <span class="skill-name">Cloud &amp; engineering</span>
+  <div class="skill-items"><span class="chip">AWS S3</span><span class="chip">AWS Lambda</span><span class="chip">Kinesis</span><span class="chip">Glue</span><span class="chip">Azure</span><span class="chip">ETL &amp; pipeline design</span></div>
+</div>
+<div class="skill-group">
+  <span class="skill-name">Business</span>
+  <div class="skill-items"><span class="chip">Business case support</span><span class="chip">Cost &amp; pricing analysis</span><span class="chip">Accounting fundamentals</span><span class="chip">Finance fundamentals</span></div>
+</div>
+      </div>
+      <div class="credit-grid">
+<div class="credit-cell"><b>2nd place</b><span>Smart India Hackathon 2024</span></div>
+<div class="credit-cell"><b>3rd place</b><span>MUJ Hackathon 2023</span></div>
+<div class="credit-cell"><b>Head of Technical Services</b><span>AIEEE Club</span></div>
+<div class="credit-cell"><b>Head of Logistics</b><span>LITMUS — 1,000+ participant college event</span></div>
+<div class="credit-cell"><b>Certified</b><span>Wharton Business Foundations · AWS Cloud Practitioner Essentials · AWS AI Practitioner · SQL Basics — Udacity · Design &amp; Analysis of Algorithms — NPTEL</span></div>
+<div class="credit-cell"><b>Coursework</b><span>Data Structures &amp; Algorithms · OOP (Java) · AI &amp; Soft Computing · Data Science &amp; Machine Learning</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="shell">
+      <div class="faq-grid">
+        <div class="faq-side">
+          <h2>Before<br>you ask&hellip;</h2>
+          <div class="faq-recap"><p>Computer Science graduate from Manipal University. Four internships across cloud data engineering and business analytics, most recently at Accenture building serverless pipelines on AWS. Looking for an analyst role in infrastructure or public sector advisory. Outside of that: hackathons, logistics for a thousand-person college event, and a long-running interest in how supply chains actually hold together.</p></div>
+        </div>
+        <div data-accordion>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-0">
+    What kind of work are you looking for?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-0"><div><p>An analyst role in infrastructure or public sector advisory — somewhere the questions are about how a system should run, not just what the numbers were last quarter. I’m equally happy on the engineering side of that, building the pipelines the analysis depends on.</p></div></div>
+</div>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-1">
+    What do you actually bring to a team?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-1"><div><p>I’m comfortable at both ends of the work. I can stand up the pipeline that moves the data, and I can sit in the room afterwards and explain to someone non-technical what it means and what I’d do about it. Most of my internships have needed both on the same day.</p></div></div>
+</div>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-2">
+    How do you approach a new problem?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-2"><div><p>I start by finding out what decision is waiting on the answer. That tells me how precise the analysis needs to be and when it needs to land. Then I go to the raw data before I go to anyone’s summary of it — most of the interesting problems are visible there and invisible by the time they reach a report.</p></div></div>
+</div>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-3">
+    What are you most proud of so far?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-3"><div><p>The reconciliation work at Accenture. It wasn’t the flashy part of the pipeline, but catching schema drift and duplicates before they hit the reports is the difference between a dashboard people trust and one they quietly stop opening.</p></div></div>
+</div>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-4">
+    What are you learning right now?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-4"><div><p>Going deeper on cloud architecture — I hold the AWS Cloud Practitioner and AI Practitioner certifications and I’m working through the solutions architect material. On the analysis side, I’m spending time on scenario and sensitivity modelling, which is where most advisory work actually lives.</p></div></div>
+</div>
+<div class="faq-item" data-acc-item data-open="false">
+  <h3><button class="faq-q" data-acc-trigger aria-expanded="false" aria-controls="faq-5">
+    Outside of work?<i class="xp-plus" aria-hidden="true"></i>
+  </button></h3>
+  <div class="faq-a" id="faq-5"><div><p>Hackathons, mostly — second at Smart India Hackathon 2024 and third at MUJ 2023. I ran logistics for LITMUS, a college event with over a thousand participants, which taught me more about planning under constraints than any coursework did.</p></div></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+  <div class="shell">
+    <div class="foot-top">
+      <div class="foot-contact">
+        <p class="foot-ask">AVAILABLE FOR ANALYST AND DATA ROLES</p>
+        <span class="foot-mail">saksham.id@gmail.com</span>
+      </div>
+      <div class="foot-col">
+        <h5>MENU</h5>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>ELSEWHERE</h5>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/saksham-gupta-45280925a/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          <li><span class="foot-plain">+91 95821 83984</span></li>
+          <li><a href="./Saksham-Gupta-Resume.pdf" download="Saksham-Gupta-Resume.pdf">R&eacute;sum&eacute; (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-sign">
+      <span class="foot-huge"><span>Let&rsquo;s build</span><span>something<i>.</i></span></span>
+    </div>
+
+    <div class="foot-base">
+      <span>2026 &mdash; SAKSHAM GUPTA &mdash; GURUGRAM, INDIA</span>
+      <a class="to-top" href="#top" data-magnetic="0.2">BACK TO TOP</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  // Modest machines get the layout and the pipeline, but not the
+  // decorative loops — they are the expensive part.
+  var lowPower = (navigator.hardwareConcurrency || 8) <= 4;
+  var hidden = function () { return document.visibilityState === "hidden"; };
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ── Preloader ───────────────────────────────────────────── */
+  (function () {
+    var el = $(".loader");
+    if (!el) return;
+    var count = $(".loader-count", el);
+    var bar = $(".loader-bar i", el);
+
+    function finish() {
+      el.dataset.done = "true";
+      document.body.style.overflow = "";
+    }
+
+    if (reduced) {
+      count.textContent = "100";
+      bar.style.right = "0%";
+      finish();
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    var started = performance.now();
+    var span = 1500;
+
+    (function tick(now) {
+      var t = Math.min(1, (now - started) / span);
+      var pct = Math.round((1 - Math.pow(1 - t, 3)) * 100);
+      count.textContent = String(pct).padStart(3, "0");
+      bar.style.right = 100 - pct + "%";
+      if (t < 1) requestAnimationFrame(tick);
+      else setTimeout(finish, 180);
+    })(started);
+  })();
+
+  /* ── Custom cursor ───────────────────────────────────────────
+     The ring eases toward the pointer, so it needs frames only
+     while it is still catching up. Once it settles the loop stops
+     dead rather than idling at 60fps forever.                    */
+  if (fine && !lowPower && !reduced) {
+    var dot = $(".cursor-dot");
+    var ring = $(".cursor-ring");
+    var target = { x: innerWidth / 2, y: innerHeight / 2 };
+    var eased = { x: target.x, y: target.y };
+    var cursorFrame = null;
+
+    function cursorLoop() {
+      var dx = target.x - eased.x;
+      var dy = target.y - eased.y;
+      eased.x += dx * 0.16;
+      eased.y += dy * 0.16;
+      ring.style.transform = "translate3d(" + eased.x + "px," + eased.y + "px,0)";
+      // keep going only while there is visible distance left to close
+      if (!hidden() && (Math.abs(dx) > 0.2 || Math.abs(dy) > 0.2)) {
+        cursorFrame = requestAnimationFrame(cursorLoop);
+      } else {
+        cursorFrame = null;
+      }
+    }
+
+    addEventListener("pointermove", function (e) {
+      target.x = e.clientX;
+      target.y = e.clientY;
+      dot.style.transform = "translate3d(" + e.clientX + "px," + e.clientY + "px,0)";
+      var hit = e.target.closest("a,button,[data-cursor],.pipe-node");
+      ring.dataset.active = hit ? "true" : "false";
+      if (cursorFrame === null) cursorFrame = requestAnimationFrame(cursorLoop);
+    }, { passive: true });
+
+    document.addEventListener("pointerleave", function () {
+      dot.style.opacity = "0"; ring.style.opacity = "0";
+    });
+    document.addEventListener("pointerenter", function () {
+      dot.style.opacity = "1"; ring.style.opacity = "1";
+    });
+  } else {
+    // no custom cursor on touch, low-power or reduced-motion
+    document.documentElement.classList.add("no-cursor");
+  }
+
+  /* ── Nav: scroll spy + mobile sheet ──────────────────────── */
+  (function () {
+    var sections = $$("main section[id]");
+    var links = $$(".nav-link");
+    if (sections.length) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            l.dataset.current = l.getAttribute("href") === "#" + e.target.id;
+          });
+        });
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+      sections.forEach(function (s) { io.observe(s); });
+    }
+
+    var burger = $(".nav-burger");
+    var sheet = $(".nav-sheet");
+    if (!burger || !sheet) return;
+
+    function setOpen(v) {
+      burger.setAttribute("aria-expanded", String(v));
+      burger.setAttribute("aria-label", v ? "Close menu" : "Open menu");
+      sheet.dataset.open = String(v);
+    }
+    burger.addEventListener("click", function () {
+      setOpen(burger.getAttribute("aria-expanded") !== "true");
+    });
+    $$("a", sheet).forEach(function (a) {
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+    addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+  })();
+
+  /* ── Magnetic buttons ────────────────────────────────────── */
+  if (fine && !reduced) {
+    $$("[data-magnetic]").forEach(function (el) {
+      var strength = parseFloat(el.dataset.magnetic) || 0.32;
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - (r.left + r.width / 2)) * strength;
+        var y = (e.clientY - (r.top + r.height / 2)) * strength;
+        el.style.transition = "transform .1s linear";
+        el.style.transform = "translate3d(" + x + "px," + y + "px,0)";
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.transition = "transform .45s cubic-bezier(.22,1,.36,1)";
+        el.style.transform = "translate3d(0,0,0)";
+      });
+    });
+  }
+
+  /* ── Hero confetti parallax ──────────────────────────────────
+     Purely input-driven: one frame per pointer move or scroll,
+     and nothing at all while the hero is off screen or idle.     */
+  if (!reduced && !lowPower) {
+    var bits = $$(".confetti");
+    var hero = $(".hero");
+    if (bits.length && hero) {
+      var px = 0, py = 0, sy = 0;
+      var heroVisible = true;
+      var bitFrame = null;
+
+      function drawBits() {
+        bitFrame = null;
+        if (!heroVisible || hidden()) return;
+        for (var i = 0; i < bits.length; i++) {
+          var el = bits[i];
+          var d = parseFloat(el.dataset.depth) || 1;
+          el.style.transform =
+            "translate3d(" + px * d * 22 + "px," + (py * d * 22 + sy * d * 0.055) + "px,0)";
+        }
+      }
+
+      function queueBits() {
+        if (bitFrame === null && heroVisible && !hidden()) {
+          bitFrame = requestAnimationFrame(drawBits);
+        }
+      }
+
+      addEventListener("pointermove", function (e) {
+        var r = hero.getBoundingClientRect();
+        px = (e.clientX - r.left - r.width / 2) / r.width;
+        py = (e.clientY - r.top - r.height / 2) / r.height;
+        queueBits();
+      }, { passive: true });
+
+      addEventListener("scroll", function () { sy = scrollY; queueBits(); }, { passive: true });
+
+      new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+      }, { threshold: 0 }).observe(hero);
+    }
+  }
+
+  /* ── Accordions (experience + FAQ) ───────────────────────── */
+  $$("[data-accordion]").forEach(function (group) {
+    var items = $$("[data-acc-item]", group);
+    items.forEach(function (item) {
+      var btn = $("[data-acc-trigger]", item);
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        var open = item.dataset.open === "true";
+        items.forEach(function (other) {
+          other.dataset.open = "false";
+          $("[data-acc-trigger]", other).setAttribute("aria-expanded", "false");
+        });
+        if (!open) {
+          item.dataset.open = "true";
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+  });
+
+  /* ── Impact counters ─────────────────────────────────────── */
+  $$("[data-count]").forEach(function (el) {
+    var to = parseInt(el.dataset.count, 10);
+    var suffix = el.dataset.suffix || "";
+    if (reduced) { el.textContent = to + suffix; return; }
+    el.textContent = "0" + suffix;
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      var started = performance.now();
+      (function step(now) {
+        var t = Math.min(1, (now - started) / 1100);
+        el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * to) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+      })(started);
+    }, { threshold: 0.5 });
+    io.observe(el);
+  });
+
+  /* ── The hero pipeline ───────────────────────────────────── */
+  (function () {
+    var svg = $(".pipe-svg");
+    var path = $("#pipe-route");
+    var layer = $("#pipe-records");
+    if (!svg || !path || !layer) return;
+
+    var GATE = { x: 26, y: 131 };
+    var SPEED = 168, BAD_ODDS = 0.13, HOLD = 760;
+    // Small squares sliding along a path read fine at 30fps, and it
+    // halves the per-frame geometry work on a slow machine.
+    var STEP = 33;
+    var SPAWN = lowPower ? 620 : 340;
+    var MAX_RECORDS = lowPower ? 12 : 26;
+
+    var readoutTitle = $(".pipe-readout h4");
+    var readoutBody = $(".pipe-readout p");
+    var defaultTitle = readoutTitle.textContent;
+    var defaultBody = readoutBody.textContent;
+
+    $$(".pipe-node", svg).forEach(function (node) {
+      function on() {
+        $$(".pipe-node", svg).forEach(function (n) { n.dataset.on = "false"; });
+        node.dataset.on = "true";
+        readoutTitle.textContent = node.dataset.label;
+        readoutBody.textContent = node.dataset.detail;
+      }
+      function off() {
+        node.dataset.on = "false";
+        readoutTitle.textContent = defaultTitle;
+        readoutBody.textContent = defaultBody;
+      }
+      node.addEventListener("mouseenter", on);
+      node.addEventListener("focus", on);
+      node.addEventListener("mouseleave", off);
+      node.addEventListener("blur", off);
+    });
+
+    var elClean = $('[data-stat="clean"]');
+    var elFlag = $('[data-stat="flagged"]');
+    var elRate = $('[data-stat="rate"]');
+
+    if (reduced) {
+      elClean.textContent = "1,248";
+      elFlag.textContent = "17";
+      elRate.textContent = "98.7%";
+      return;
+    }
+
+    var total = path.getTotalLength();
+    var gateAt = total * 0.62, best = Infinity;
+    // Coarse scan: 2-unit steps are plenty to locate the gate and
+    // halve the synchronous cost of this at startup.
+    for (var d = 0; d <= total; d += 2) {
+      var p = path.getPointAtLength(d);
+      var gap = (p.x - GATE.x) * (p.x - GATE.x) + (p.y - GATE.y) * (p.y - GATE.y);
+      if (gap < best) { best = gap; gateAt = d; }
+    }
+
+    var records = [], clean = 0, flagged = 0;
+    var last = performance.now(), sinceSpawn = 0, running = true, frame;
+
+    function paint() {
+      elClean.textContent = clean.toLocaleString();
+      elFlag.textContent = flagged.toLocaleString();
+      var seen = clean + flagged;
+      elRate.textContent = seen ? ((clean / seen) * 100).toFixed(1) + "%" : "—";
+    }
+
+    function make(at, bad) {
+      if (bad === undefined) bad = Math.random() < BAD_ODDS;
+      var size = bad ? 5 : 4;
+      var el = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      el.setAttribute("width", size);
+      el.setAttribute("height", size);
+      el.setAttribute("fill", bad ? "#f0341a" : "#2417f5");
+      layer.appendChild(el);
+      records.push({ d: at || 0, bad: bad, held: 0, el: el, size: size, px: 0, py: 0 });
+    }
+
+    // start mid-flight so it reads as already running
+    for (var i = 0; i < 9; i++) make(total * (0.08 + i * 0.1), false);
+
+    function tick(now) {
+      if (now - last < STEP) {
+        if (running) frame = requestAnimationFrame(tick);
+        return;
+      }
+      var dt = Math.min(96, now - last);
+      last = now;
+      sinceSpawn += dt;
+      if (sinceSpawn >= SPAWN) {
+        sinceSpawn = 0;
+        if (records.length < MAX_RECORDS) make();
+      }
+
+      for (var i = records.length - 1; i >= 0; i--) {
+        var r = records[i];
+
+        if (r.held > 0) {
+          r.held += dt;
+          var t = r.held / HOLD;
+          r.el.setAttribute("opacity", String(Math.max(0, 1 - t)));
+          r.el.setAttribute("transform",
+            "rotate(" + t * 90 + " " + (r.px + r.size / 2) + " " + (r.py + r.size / 2) + ")");
+          if (r.held >= HOLD) {
+            r.el.remove(); records.splice(i, 1); flagged++; paint();
+          }
+          continue;
+        }
+
+        r.d += (SPEED * dt) / 1000;
+
+        if (r.bad && r.d >= gateAt) { r.d = gateAt; r.held = 1; }
+
+        if (r.d >= total) {
+          r.el.remove(); records.splice(i, 1); clean++; paint();
+          continue;
+        }
+
+        var pt = path.getPointAtLength(r.d);
+        r.px = pt.x - r.size / 2;
+        r.py = pt.y - r.size / 2;
+        r.el.setAttribute("x", r.px);
+        r.el.setAttribute("y", r.py);
+      }
+      if (running) frame = requestAnimationFrame(tick);
+    }
+
+    // Run only while the diagram is both on screen and in a visible
+    // tab — a background tab should cost nothing.
+    var onScreen = true;
+
+    function sync() {
+      var should = onScreen && !hidden();
+      if (should && !running) {
+        running = true;
+        last = performance.now();
+        frame = requestAnimationFrame(tick);
+      } else if (!should && running) {
+        running = false;
+        cancelAnimationFrame(frame);
+      }
+    }
+
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      sync();
+    }, { threshold: 0 }).observe(svg);
+
+    document.addEventListener("visibilitychange", sync);
+
+    paint();
+    frame = requestAnimationFrame(tick);
+  })();
+
+  /* ── Résumé download ─────────────────────────────────────────
+     The claude.ai artifact viewer never grants a page permission to
+     download, so a plain link does nothing there. When the page is
+     running inside it, hand the file to its downloads capability
+     instead. On an ordinary host (Vercel, a local file) window.claude
+     doesn't exist, none of this runs, and the plain link works. */
+  (function () {
+    var links = $$("a[download]");
+    if (!links.length) return;
+    if (!window.claude || typeof window.claude.use !== "function") return;
+
+    // If saving isn't available to this viewer, fall back to opening the
+    // PDF in a new tab so the résumé is always reachable.
+    function openInTab() {
+      links.forEach(function (a) {
+        a.removeAttribute("download");
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noreferrer");
+      });
+    }
+
+    window.claude.use("downloads").then(function (downloads) {
+      if (!downloads) { openInTab(); return; }
+
+      links.forEach(function (a) {
+        a.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          if (a.dataset.saving === "true") return; // one prompt at a time
+          a.dataset.saving = "true";
+
+          fetch(a.getAttribute("href"))
+            .then(function (r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.blob();
+            })
+            .then(function (data) {
+              return downloads.save({
+                filename: a.getAttribute("download") || "resume.pdf",
+                data: data,
+              });
+            })
+            .catch(function () {
+              // viewer declined, or saving is unavailable — nothing to undo
+            })
+            .then(function () {
+              a.dataset.saving = "false";
+            });
+        });
+      });
+    }, openInTab);
+  })();
+})();
+
+</script>
+</body>
+</html>
